@@ -17,14 +17,30 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class RegistrationFormTests {
 
     @Test
-    public void fillFormTest(){
+    public void fillFormTest() {
+        String firstName = RandomStringUtils.randomAlphabetic(5);
+        String lastName = RandomStringUtils.randomAlphabetic(5);
+        String email = RandomStringUtils.randomAlphabetic(5) + "@rrr.com";
+        String userNumber = RandomStringUtils.randomNumeric(10);
+        String address = RandomStringUtils.randomAlphabetic(20);
+
         openPage();
-        fillForm();
-        checkModal();
+        fillForm(firstName, lastName, email, userNumber, address);
+        checkModal(firstName, lastName, email, userNumber, address);
+        closeModal();
     }
 
-    private void checkModal() {
+    private void closeModal() {
+        $("#closeLargeModal").click();
+        $(".modal-header").shouldNotBe(Condition.visible);
+    }
+
+    private void checkModal(String firstname, String lastName, String email, String userNumber, String address) {
         $(".modal-header").shouldHave(Condition.text("Thanks for submitting the form"));
+        $("tbody").shouldHave(Condition.text(firstname), Condition.text(lastName), Condition.text(email),
+                Condition.text("Male"), Condition.text(userNumber), Condition.text("2010"),
+                Condition.text("Computer Science"), Condition.text("Sports"), Condition.text("picture"),
+                Condition.text(address), Condition.text("NCR Delhi"));
     }
 
     private void openPage() {
@@ -33,12 +49,12 @@ public class RegistrationFormTests {
         $("h5").shouldHave(Condition.text("Student Registration Form"));
     }
 
-    private void fillForm() {
-        $("#firstName").setValue(RandomStringUtils.randomAlphabetic(5));
-        $("#lastName").setValue(RandomStringUtils.randomAlphabetic(5));
-        $("#userEmail").setValue(RandomStringUtils.randomAlphabetic(5) + "@rrr.com");
+    private void fillForm(String firstname, String lastName, String email, String userNumber, String address) {
+        $("#firstName").setValue(firstname);
+        $("#lastName").setValue(lastName);
+        $("#userEmail").setValue(email);
         $("[for='gender-radio-1']").click();
-        $("#userNumber").setValue(RandomStringUtils.randomNumeric(10));
+        $("#userNumber").setValue(userNumber);
         $("#dateOfBirthInput").click();
         $("#dateOfBirthInput").sendKeys(Keys.BACK_SPACE);
         $("#dateOfBirthInput").sendKeys(Keys.BACK_SPACE);
@@ -47,7 +63,7 @@ public class RegistrationFormTests {
         $("#subjectsInput").setValue("Computer Science").pressEnter();
         $("[for='hobbies-checkbox-1']").click();
         $("#uploadPicture").uploadFile(new File("src/test/resources/picture.jpg"));
-        $("#currentAddress").setValue(RandomStringUtils.randomAlphabetic(20));
+        $("#currentAddress").setValue(address);
         $("#state").click();
         $("#state div:nth-child(3) div div").click();
         $("#city").click();
