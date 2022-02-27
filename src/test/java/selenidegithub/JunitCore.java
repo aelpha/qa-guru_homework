@@ -23,11 +23,7 @@ public class JunitCore {
         // run all methods with @Test
         for (Method method : clazz.getDeclaredMethods()) {
             Test methodAnnotation = method.getAnnotation(Test.class);
-            BeforeEach beforeAllAnnotation = method.getAnnotation(BeforeEach.class);
-            AfterEach afterAllAnnotation = method.getAnnotation(AfterEach.class);
-            if (beforeAllAnnotation != null){
-                method.invoke(clazz.getConstructor().newInstance());
-            } else if (methodAnnotation != null) {
+            if (methodAnnotation != null) {
                 // run method with @Test
                 try {
                     method.invoke(clazz.getConstructor().newInstance());
