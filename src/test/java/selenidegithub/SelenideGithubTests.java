@@ -1,6 +1,8 @@
 package selenidegithub;
 
 import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +16,11 @@ public class SelenideGithubTests {
     static void beforeAll() {
         Configuration.baseUrl = "https://github.com/";
         Configuration.browserSize = "1920x1080";
+    }
+
+    @AfterAll
+    static void afterAll(){
+        closeWebDriver();
     }
 
     @Test
