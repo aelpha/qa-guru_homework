@@ -8,51 +8,51 @@ import java.io.File;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class RegistrationPage extends TestBase {
+public class RegistrationPage {
 
     //locators *все не заменяла, т.к. они по одному разу используются, особого смысла нет
-    private static final SelenideElement firstNameInput = $("#firstName");
-    private static final SelenideElement lastNameInput = $("#lastName");
-    private static final SelenideElement emailInput = $("#userEmail");
-    private static final SelenideElement genderMale = $("[for='gender-radio-1']");
-    private static final SelenideElement mobileNumberInput = $("#userNumber");
-    private static final SelenideElement subjectInput = $("#subjectsInput");
-    private static final SelenideElement currentAddress = $("#currentAddress");
-    private static final SelenideElement datepickerInput = $("#dateOfBirthInput");
+    private final SelenideElement firstNameInput = $("#firstName");
+    private final SelenideElement lastNameInput = $("#lastName");
+    private final SelenideElement emailInput = $("#userEmail");
+    private final SelenideElement genderMale = $("[for='gender-radio-1']");
+    private final SelenideElement mobileNumberInput = $("#userNumber");
+    private final SelenideElement subjectInput = $("#subjectsInput");
+    private final SelenideElement currentAddress = $("#currentAddress");
+    private final SelenideElement datepickerInput = $("#dateOfBirthInput");
 
     //functions
-    public static void openPage() {
+    public void openPage() {
         open("/automation-practice-form");
         $("h5").shouldHave(Condition.text("Student Registration Form"));
     }
 
-    public static void closeModal() {
+    public void closeModal() {
         $("#closeLargeModal").click();
         $(".modal-header").shouldNotBe(Condition.visible);
     }
 
-    public static void checkModal(String firstname, String lastName, String email, String userNumber, String address) {
+    public void checkModal(UserData user) {
         $(".modal-header").shouldHave(Condition.text("Thanks for submitting the form"));
-        $("tbody").shouldHave(Condition.text(firstname), Condition.text(lastName), Condition.text(email),
-                Condition.text("Male"), Condition.text(userNumber), Condition.text("17 April,1925"),
+        $("tbody").shouldHave(Condition.text(user.firstName), Condition.text(user.lastName), Condition.text(user.email),
+                Condition.text("Male"), Condition.text(user.number), Condition.text("17 April,1925"),
                 Condition.text("Computer Science"), Condition.text("Sports"), Condition.text("picture"),
-                Condition.text(address), Condition.text("NCR Delhi"));
+                Condition.text(user.address), Condition.text("NCR Delhi"));
     }
 
-    public static void fillForm(String firstname, String lastName, String email, String userNumber, String address,
+    public void fillForm(UserData user,
                                 String dayIndex, int monthIndex, int yearIndex) {
-        firstNameInput.setValue(firstname);
-        lastNameInput.setValue(lastName);
-        emailInput.setValue(email);
+        firstNameInput.setValue(user.firstName);
+        lastNameInput.setValue(user.lastName);
+        emailInput.setValue(user.email);
         genderMale.click();
-        mobileNumberInput.setValue(userNumber);
+        mobileNumberInput.setValue(user.number);
         datepickerInput.click();
         selectData(monthIndex, yearIndex, dayIndex);
         $("#subjects-label").click();
         subjectInput.setValue("Computer Science").pressEnter();
         $("[for='hobbies-checkbox-1']").click();
         $("#uploadPicture").uploadFile(new File("src/test/resources/picture.jpg"));
-        currentAddress.setValue(address);
+        currentAddress.setValue(user.address);
         $("#state").click();
         $("#state div:nth-child(3) div div").click();
         $("#city").click();
@@ -60,4 +60,13 @@ public class RegistrationPage extends TestBase {
         clickSubmit();
     }
 
+    static void clickSubmit() {
+        $("#submit").click();
+    }
+
+    static void selectData(int monthIndex, int yearIndex, String dayIndex) {
+        $(".react-datepicker__month-select").selectOption(monthIndex);
+        $(".react-datepicker__year-select").selectOption(yearIndex);
+        $("[class*='react-datepicker__day--0"+dayIndex+"']").click();
+    }
 }

@@ -1,15 +1,20 @@
 package qaguru;
 
-import static com.codeborne.selenide.Selenide.$;
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class TestBase {
-    static void clickSubmit() {
-        $("#submit").click();
+
+    @BeforeEach
+    public void beforeEach() {
+        Configuration.browserSize = "1920x1080";
+        Configuration.baseUrl = "https://demoqa.com";
     }
 
-    static void selectData(int monthIndex, int yearIndex, String dayIndex) {
-        $(".react-datepicker__month-select").selectOption(monthIndex);
-        $(".react-datepicker__year-select").selectOption(yearIndex);
-        $("[class*='react-datepicker__day--0"+dayIndex+"']").click();
+    @AfterEach
+    public void afterEach(){
+        closeWebDriver();
     }
 }
