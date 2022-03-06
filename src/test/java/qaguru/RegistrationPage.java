@@ -57,14 +57,13 @@ public class RegistrationPage {
         $("#state div:nth-child(3) div div").click();
         $("#city").click();
         $("#city div:nth-child(3) div div").click();
-        clickSubmit();
     }
 
-    static void clickSubmit() {
+    public void clickSubmit() {
         $("#submit").click();
     }
 
-    static void selectData(int monthIndex, int yearIndex, String dayIndex) {
+    public void selectData(int monthIndex, int yearIndex, String dayIndex) {
         $(".react-datepicker__month-select").selectOption(monthIndex);
         $(".react-datepicker__year-select").selectOption(yearIndex);
         $("[class*='react-datepicker__day--0"+dayIndex+"']").click();

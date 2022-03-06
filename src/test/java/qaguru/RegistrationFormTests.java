@@ -22,6 +22,7 @@ public class RegistrationFormTests extends TestBase {
 
         registrationPage.openPage();
         registrationPage.fillForm(user, dayIndex, monthIndex, yearIndex);
+        registrationPage.clickSubmit();
         registrationPage.checkModal(user);
         registrationPage.closeModal();
     }
