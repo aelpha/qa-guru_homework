@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class TestBase {
+    //*** Добавлен второй комментарий, чтоб сделать коммит***
     @BeforeAll
     static void beforeAll() {
         Configuration.baseUrl = "https://github.com/";
@@ -14,6 +15,7 @@ public class TestBase {
     }
 
     @AfterAll
+    //***Добавлен третий комментарий***
     static void afterAll(){
         closeWebDriver();
     }

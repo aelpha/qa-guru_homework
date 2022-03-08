@@ -10,6 +10,7 @@ public class SelenideGithubTests extends TestBase {
 
     @Test
     public void wikiHaveSoftAssertionsPage() {
+        //***Добавлен комментарий, чтоб сделать второй коммит***
         open("/selenide/selenide");
         $("h1").shouldHave(text("""
                 selenide
