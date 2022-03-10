@@ -1,30 +1,16 @@
 package selenidegithub;
 
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
-public class SelenideGithubTests {
-
-    @BeforeAll
-    static void beforeAll() {
-        Configuration.baseUrl = "https://github.com/";
-        Configuration.browserSize = "1920x1080";
-    }
-
-    @AfterAll
-    static void afterAll(){
-        closeWebDriver();
-    }
+public class SelenideGithubTests extends TestBase {
 
     @Test
     public void wikiHaveSoftAssertionsPage() {
+        //***Добавлен комментарий, чтоб сделать второй коммит***
         open("/selenide/selenide");
         $("h1").shouldHave(text("""
                 selenide
