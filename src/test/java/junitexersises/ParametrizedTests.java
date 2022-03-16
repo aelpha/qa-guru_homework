@@ -13,7 +13,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class ParametrizedTests {
 
     @BeforeEach
-    public void beforeEach(){
+    public void beforeAll(){
         Configuration.browserSize = "1920x1080";
     }
 
