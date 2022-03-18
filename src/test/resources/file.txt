@@ -1,0 +1,11 @@
+{
+  "id": 2,
+  "description": "Роскошная коробка",
+  "number": 567,
+  "active": true,
+  "systemInfo": {
+    "ololo": "trololo",
+    "server": "OG100"
+  },
+  "onBoard": true
+}

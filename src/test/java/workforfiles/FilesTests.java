@@ -2,15 +2,19 @@ package workforfiles;
 
 import com.codeborne.pdftest.PDF;
 import com.codeborne.xlstest.XLS;
+import com.google.gson.internal.bind.JsonTreeReader;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvRecursionException;
+import io.qameta.allure.internal.shadowed.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -43,5 +47,26 @@ public class FilesTests {
 
             assertThat(content.get(0)).contains("Footnotes");
         }
+    }
+
+    @Test
+    public void jsonFileTest() throws Exception {
+        byte[] mapData = Files.readAllBytes(Paths.get("src/test/resources/file.txt"));
+        Map myMap;
+        ObjectMapper objectMapper = new ObjectMapper();
+        myMap = objectMapper.readValue(mapData, TreeMap.class);
+        assertThat(myMap.get("id").equals(2)).as("id value is correct").isTrue();
+        assertThat(myMap.get("description").equals("Роскошная коробка")).as("description value is correct")
+                .isTrue();
+    }
+
+    @Test
+    public void jsonFileClassTest() throws Exception {
+        byte[] mapData = Files.readAllBytes(Paths.get("src/test/resources/file.txt"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        Box box = objectMapper.readValue(mapData, Box.class);
+        assertThat(box.id).isEqualTo(2);
+        assertThat(box.description).isEqualTo("Роскошная коробка");
+        assertThat(box.systemInfo.ololo).isEqualTo("trololo");
     }
 }
