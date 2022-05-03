@@ -9,3 +9,24 @@ curl -X POST \
      Template
 
      java "-DconfigFile=notifications/telegram_config.json" -jar notifications/allure-notifications-4.1.jar
+
+     Jenkins
+
+     java
+     "-Dproject.name=${PROJECT_NAME}" \
+     "-Denv=${ENVIRONMENT}" \
+     "-Dreport.link=${BUILD_URL}" \
+     "-DconfigFile=notifications/telegram_config.json" \
+     -jar notifications/allure-notifications-4.1.jar
+
+     java  \
+     "-Dchat.id=-1001731234107" \
+     "-Dbot.token=5279133610:AAEvyyw57-ZeB6a-adRIMBh9JHeKNkyRHdM" \
+     "-Dproject.name=${JOB_BASE_NAME}" \
+     "-Dbuild.launch.name=Some release 2.0" \
+     "-Dbuild.env=https://prod.your.site" \
+     "-Dbuild.report.link=${BUILD_URL}" \            <- jenkins environment var
+     "-Dlang=en" \
+     "-Denable.chart=true" \
+     "-Dallure.report.folder=./allure-report/" \
+     -jar allure-notifications-2.2.1.jar
