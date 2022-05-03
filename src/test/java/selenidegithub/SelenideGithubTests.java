@@ -26,10 +26,7 @@ public class SelenideGithubTests {
     @Test
     public void wikiHaveSoftAssertionsPage() {
         open("/selenide/selenide");
-        $("h1").shouldHave(text("""
-                selenide
-                /
-                selenide"""));
+        $("h1").shouldHave(text("selenide/selenide"));
         $("#wiki-tab").click();
         $("#wiki-pages-box button").click();
         $("#wiki-pages-box").$$("li").findBy(text("SoftAssertions")).shouldBe(visible).click();
